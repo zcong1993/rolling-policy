@@ -46,6 +46,12 @@
       "jsx",
       "json",
       "node"
+    ],
+    "coverageReporters": [
+      "json",
+      "text",
+      "lcovonly",
+      "clover"
     ]
   },
   "lint-staged": {
