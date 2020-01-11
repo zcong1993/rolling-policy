@@ -1,6 +1,6 @@
 {
   "name": "@zcong/rolling-policy",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "my cool project",
   "main": "./dist/index.js",
   "files": [
@@ -21,17 +21,17 @@
   "author": "zcong1993",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^24.0.25",
     "@types/node": "^13.1.6",
     "husky": "^4.0.6",
+    "jest": "^24.9.0",
     "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.3.0",
     "tslint": "^5.20.1",
     "tslint-config-airbnb": "^5.11.2",
-    "typescript": "^3.7.4",
-    "@types/jest": "^24.0.25",
-    "ts-jest": "^24.3.0",
-    "jest": "^24.9.0",
-    "prettier": "^1.19.1",
-    "tslint-config-prettier": "^1.18.0"
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.7.4"
   },
   "jest": {
     "testEnvironment": "node",
