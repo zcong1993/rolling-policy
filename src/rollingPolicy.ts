@@ -93,33 +93,3 @@ export class RollingPolicy {
     f(this.offset, val)
   }
 }
-
-// const sleep = (n: number) => new Promise(r => setTimeout(r, n))
-// const w = new Window(10)
-// const rp = new RollingPolicy(w, { bucketDuration: 300 })
-
-// const run = async () => {
-//   // await sleep(400)
-//   // rp.add(1)
-//   // await sleep(201)
-//   // rp.add(1)
-
-//   // await sleep(290)
-//   // rp.add(1)
-
-//   // await sleep(3200)
-//   // rp.add(1)
-
-//   await sleep(305)
-//   rp.add(1)
-
-//   await sleep(3200)
-//   rp.add(1)
-
-//   await sleep(6400)
-//   rp.add(1)
-
-//   rp.getWindow().getBuckets().forEach(b => console.log(b.getPoints()))
-// }
-
-// run()

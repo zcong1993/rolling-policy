@@ -32,27 +32,3 @@ export class RollingCounter {
     return this.currentBuckets().map(b => b.getPoints())
   }
 }
-
-// const sleep = (n: number) => new Promise(r => setTimeout(r, n))
-
-// const rc = new RollingCounter({ size: 3, bucketDuration: 1000 })
-
-// const run = async () => {
-//   console.log(rc.currentPoints())
-//   rc.add(1)
-//   console.log(rc.currentPoints())
-//   await sleep(1000)
-//   rc.add(2)
-//   rc.add(3)
-//   console.log(rc.currentPoints())
-//   await sleep(1000)
-//   rc.add(4)
-//   rc.add(5)
-//   rc.add(6)
-//   console.log(rc.currentPoints())
-//   await sleep(1000)
-//   rc.add(7)
-//   console.log(rc.currentPoints())
-// }
-
-// run()
