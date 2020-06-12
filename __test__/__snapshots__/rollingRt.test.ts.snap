@@ -1,0 +1,251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should work well 1`] = `
+Array [
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 0,
+    "minRt": 9007199254740991,
+    "total": 0,
+  },
+  Object {
+    "count": 0,
+    "minRt": 9007199254740991,
+    "total": 0,
+  },
+  Object {
+    "count": 0,
+    "minRt": 9007199254740991,
+    "total": 0,
+  },
+]
+`;
+
+exports[`should work well 2`] = `
+Array [
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 0,
+    "minRt": 9007199254740991,
+    "total": 0,
+  },
+  Object {
+    "count": 0,
+    "minRt": 9007199254740991,
+    "total": 0,
+  },
+]
+`;
+
+exports[`should work well 3`] = `
+Array [
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 0,
+    "minRt": 9007199254740991,
+    "total": 0,
+  },
+]
+`;
+
+exports[`should work well 4`] = `
+Array [
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+]
+`;
+
+exports[`should work well 5`] = `
+Array [
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+]
+`;
+
+exports[`should work well 6`] = `
+Array [
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+]
+`;
+
+exports[`should work well 7`] = `
+Array [
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+]
+`;
+
+exports[`should work well 8`] = `
+Array [
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+]
+`;
+
+exports[`should work well 9`] = `
+Array [
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+]
+`;
+
+exports[`should work well 10`] = `
+Array [
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+  Object {
+    "count": 1,
+    "minRt": 1,
+    "total": 1,
+  },
+]
+`;

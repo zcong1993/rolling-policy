@@ -50,8 +50,8 @@ export abstract class RollingPolicy<T> {
     return cloneDeep(this.buffer)
   }
 
-  abstract emptyBucketData(): T
-  abstract addFunc(old: T, data: any): T
+  protected abstract emptyBucketData(): T
+  protected abstract addFunc(old: T, data: any): T
 
   protected dropExpired() {
     const duration = hrtime2nano(process.hrtime(this.lastUpdatedAt))
