@@ -1,34 +1,20 @@
 import { RollingPolicy } from './rollingPolicy'
-import { Window } from './window'
+import { sum } from './util'
 
-export interface RollingCounterOpts {
-  size: number
-  bucketDuration: number
-}
+type CounterBucket = number[]
 
-export class RollingCounter {
-  private policy: RollingPolicy
-
-  constructor(opts: RollingCounterOpts) {
-    const window = new Window(opts.size)
-    this.policy = new RollingPolicy(window, {
-      bucketDuration: opts.bucketDuration
-    })
+export class RollingCounter extends RollingPolicy<CounterBucket> {
+  emptyBucketData(): CounterBucket {
+    return []
   }
 
-  add(val: number) {
-    this.policy.add(val)
+  addFunc(old: CounterBucket, data: number): CounterBucket {
+    old.push(data)
+    return old
   }
 
-  timespan() {
-    return this.policy.timespan()
-  }
-
-  currentBuckets() {
-    return this.policy.currentBuckets()
-  }
-
-  currentPoints() {
-    return this.currentBuckets().map(b => b.getPoints())
+  getCounter() {
+    super.dropExpired()
+    return this.buffer.reduce((prev, acc) => prev + sum(acc), 0)
   }
 }

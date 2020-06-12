@@ -1,95 +1,102 @@
-import { Window } from './window'
-import { hrtime } from './util'
+import debug from 'debug'
+import cloneDeep from 'clone-deep'
+import { Hrtime, hrtime2nano, ms2nano, sum } from './util'
 
-export interface RollingPolicyOpts {
-  bucketDuration: number // ms
+const db = debug('rolling-policy')
+
+export interface Opt {
+  window: number // ms, full time window
+  windowSize: number // window split bucket size
 }
 
-type addFunc = (offset: number, val: number) => void
+export abstract class RollingPolicy<T> {
+  protected windowDuration: number
+  protected lastUpdatedAt: Hrtime
+  protected startTime: Hrtime
+  protected buffer: T[]
+  protected opt: Opt
 
-export class RollingPolicy {
-  private size: number
-  private window: Window
-  private offset: number = 0
-  private bucketDurationInNano: number
-  private lastAppendTime: number
-
-  constructor(window: Window, opts: RollingPolicyOpts) {
-    this.window = window
-    this.bucketDurationInNano = opts.bucketDuration * 1e6
-
-    this.size = window.getSize()
-    this.lastAppendTime = hrtime()
-  }
-
-  getWindow() {
-    return this.window
-  }
-
-  timespan() {
-    const v = Math.floor(
-      (hrtime() - this.lastAppendTime) / this.bucketDurationInNano
-    )
-    if (v > -1) {
-      return v
+  constructor(c: Opt) {
+    this.opt = {
+      window: ms2nano(c.window),
+      windowSize: c.windowSize,
     }
-    return this.size
+    this.windowDuration = this.opt.window / this.opt.windowSize
+    this.lastUpdatedAt = process.hrtime()
+    this.startTime = process.hrtime()
+
+    this.buffer = []
+    for (let i = 0; i < c.windowSize; i++) {
+      const empty = this.emptyBucketData()
+      this.buffer.push(empty)
+    }
+    db(this)
   }
 
-  add(val: number) {
-    this.addByF(this.window.add.bind(this.window), val)
-  }
+  add(d: any) {
+    this.dropExpired()
+    const o = this.offset()
+    this.buffer[this.mapIndex(o)] = this.addFunc(
+      this.buffer[this.mapIndex(o)],
+      d
+    )
 
-  append(val: number) {
-    this.addByF(this.window.append.bind(this.window), val)
+    db(`index: ${o}, ${this.mapIndex(o)}`)
+    this.updatelastUpdatedAt()
   }
 
   currentBuckets() {
-    const timespan = this.timespan()
-    const count = this.size - timespan
-    if (count > 0) {
-      let offset = this.offset + timespan + 1
-      if (offset >= this.size) {
-        offset -= this.size
-      }
-      const res = []
-      let cur = this.window.getBucket(offset)
-      let i = 0
-      while (i < count) {
-        res.push(cur)
-        cur = cur.next
-        i += 1
-      }
-      return res
-    }
-    return []
+    this.dropExpired()
+    return cloneDeep(this.buffer)
   }
 
-  private addByF(f: addFunc, val: number) {
-    let timespan = this.timespan()
-    if (timespan > 0) {
-      this.lastAppendTime += timespan * this.bucketDurationInNano
-      let offset = this.offset
-      const s = offset + 1
-      if (timespan > this.size) {
-        timespan = this.size
+  abstract emptyBucketData(): T
+  abstract addFunc(old: T, data: any): T
+
+  protected dropExpired() {
+    const duration = hrtime2nano(process.hrtime(this.lastUpdatedAt))
+    const offset = this.offset()
+    const lastOffset = this.lastOffset()
+    db(`duration: ${duration}`)
+    // reset all
+    if (duration > this.opt.window) {
+      db('reset all')
+      for (let i = 0; i < this.opt.windowSize; i++) {
+        this.buffer[i] = this.emptyBucketData()
       }
-      let e = s + timespan
-      let e1 = 0
-      if (e > this.size) {
-        e1 = e - this.size
-        e = this.size
-      }
-      for (let i = s; i < e; i += 1) {
-        this.window.resetBucket(i)
-        offset = i
-      }
-      for (let i = 0; i < e1; i += 1) {
-        this.window.resetBucket(i)
-        offset = i
-      }
-      this.offset = offset
+      return
     }
-    f(this.offset, val)
+
+    const left = offset - this.opt.windowSize
+    const lastLeft = lastOffset - this.opt.windowSize
+    db(`${lastOffset}, ${offset}, clean: [${lastLeft + 1}, ${left}]`)
+    for (let i = lastLeft + 1; i <= left; i++) {
+      const mappedIndex = this.mapIndex(i)
+      if (mappedIndex >= 0) {
+        this.buffer[mappedIndex] = this.emptyBucketData()
+      }
+    }
+  }
+
+  protected updatelastUpdatedAt() {
+    this.lastUpdatedAt = process.hrtime()
+  }
+
+  protected lastOffset() {
+    const o = Math.floor(
+      (hrtime2nano(this.lastUpdatedAt) - hrtime2nano(this.startTime)) /
+        this.windowDuration
+    )
+    return o
+  }
+
+  protected offset() {
+    const diff = hrtime2nano(process.hrtime(this.startTime))
+    const o = Math.floor(diff / this.windowDuration)
+    return o
+  }
+
+  protected mapIndex(i: number) {
+    return i % this.opt.windowSize
   }
 }

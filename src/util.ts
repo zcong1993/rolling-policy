@@ -1,6 +1,10 @@
-export const hrtime2nano = (hrtime: [number, number]): number =>
+export type Hrtime = [number, number]
+
+export const hrtime2nano = (hrtime: Hrtime): number =>
   hrtime[0] * 1e9 + hrtime[1]
 
-export const hrtime = () => hrtime2nano(process.hrtime())
+export const ms2nano = (t: number): number => t * 1e6
 
-export const sleepMs = (n: number) => new Promise(r => setTimeout(r, n))
+export const sum = (arr: number[]): number => {
+  return arr.reduce((prev, acc) => prev + acc, 0)
+}
